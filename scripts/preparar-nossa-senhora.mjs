@@ -1,6 +1,7 @@
 /**
  * Converte originais/nossa-senhora.png em public/img/nossa-senhora.webp.
- * - Recupera o brilho dourado guardado em pixels transparentes (vira transparência real).
+ * - Recupera o brilho dourado guardado em pixels transparentes, mas só o contorno
+ *   próximo da figura (a aura ampla é desenhada no site, em SVG).
  * - Suaviza as bordas para o brilho não terminar em corte reto.
  * Uso: npm run nossa-senhora
  */
@@ -17,6 +18,9 @@ if (!existsSync(src)) {
 
 const { data, info } = await sharp(src).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
 const { width: w, height: h } = info;
+const GLOW_CURVE = 2.6; // maior = contorno mais justo
+const GLOW_FORCA = 0.9; // 0 a 1
+
 const fade = (d, size) => Math.min(1, d / size);
 
 for (let y = 0; y < h; y++) {
@@ -27,7 +31,8 @@ for (let y = 0; y < h; y++) {
       const m = Math.max(data[i], data[i + 1], data[i + 2]);
       if (m > a) {
         for (let k = 0; k < 3; k++) data[i + k] = Math.min(255, Math.round((data[i + k] * 255) / m));
-        a = m;
+        // Curva forte: o brilho junto à figura fica; a névoa distante some.
+        a = Math.max(a, Math.round(255 * Math.pow(m / 255, GLOW_CURVE) * GLOW_FORCA));
       }
     }
     const edge = fade(x, w * 0.12) * fade(w - 1 - x, w * 0.12) * fade(y, h * 0.06) * fade(h - 1 - y, h * 0.04);

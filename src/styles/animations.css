@@ -20,13 +20,13 @@
 
 /* Halo, raios e figura */
 .rays {
-  transform-origin: 200px 250px;
+  transform-origin: 200px 300px;
   transform-box: view-box;
   animation: spin 120s linear infinite;
 }
 
 .halo {
-  transform-origin: 200px 250px;
+  transform-origin: 200px 300px;
   transform-box: view-box;
   animation: breathe 6s ease-in-out infinite;
 }
