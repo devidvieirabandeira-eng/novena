@@ -120,13 +120,13 @@ function inlineCss() {
       let source = String(html.source);
       for (const [name, file] of Object.entries(bundle)) {
         if (!name.endsWith('.css')) continue;
-        const link = new RegExp(`<link rel="stylesheet"[^>]*href="[^"]*${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"[^>]*>`);
-        if (!link.test(source)) continue;
+        const link = (source.match(/<link rel="stylesheet"[^>]*>/g) || []).find((tag) => tag.includes(name));
+        if (!link) continue;
         // As URLs do CSS eram relativas a assets/; no <style> passam a ser relativas ao index.html.
         const css = String(file.source)
           .replace(/url\(\.\/(?!\.)/g, 'url(./assets/')
           .replace(/url\(\.\.\//g, 'url(./');
-        source = source.replace(link, () => `<style>${css}</style>`);
+        source = source.replace(link, () => '<style>' + css + '</style>');
         delete bundle[name];
       }
       html.source = source;
