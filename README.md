@@ -60,17 +60,25 @@ Datas e horas usam o fuso de Brasília (`-03:00`). Durante a novena, o cartão d
 
 ## 3. Como trocar a imagem de Nossa Senhora e a foto da igreja
 
-Coloque os arquivos na pasta `public/img/` com **exatamente** estes nomes:
+### Nossa Senhora (topo do site)
 
-| Arquivo | Onde aparece | Tamanho sugerido |
-|---|---|---|
-| `public/img/nossa-senhora.webp` | Topo do site, no lugar da ilustração | 800 × 1400 px (vertical) |
-| `public/img/igreja.webp` | Seção "Como chegar", no lugar do espaço reservado | 1200 × 900 px (horizontal) |
+1. Salve a imagem em **`originais/nossa-senhora.png`**. Ela deve ser vertical (proporção 2:3, por exemplo 1024 × 1536) e ter **fundo transparente**.
+2. Rode:
 
-- Enquanto os arquivos não existirem, o site mostra a ilustração de Nossa Senhora e um espaço reservado elegante para a igreja.
-- A imagem de Nossa Senhora aparece recortada em arco, com o halo e os raios dourados atrás. Uma foto com fundo transparente fica ainda mais bonita.
-- **Como converter para WebP:** use o [Squoosh](https://squoosh.app) (grátis, no navegador): abra a foto, escolha *WebP* com qualidade 75–80 e baixe.
-- Depois de colocar as imagens, rode `npm run build` de novo (ou reinicie o `npm run dev`).
+   ```bash
+   npm run nossa-senhora
+   ```
+
+   O comando gera `public/img/nossa-senhora.webp`: recupera o brilho dourado em volta da figura, suaviza as bordas e reduz o arquivo para carregar rápido.
+3. Rode `npm run build` (ou reinicie o `npm run dev`).
+
+A imagem aparece dentro da aura dourada, com os raios girando, a flutuação e a poeira dourada. Se `public/img/nossa-senhora.webp` não existir, o site usa a ilustração em SVG.
+
+### Foto da Igreja Matriz ("Como chegar")
+
+Coloque a foto em **`public/img/igreja.webp`**, na horizontal (sugestão: 1200 × 900 px). Enquanto ela não existir, aparece um espaço reservado elegante.
+
+Para converter uma foto em WebP, use o [Squoosh](https://squoosh.app) (grátis, no navegador): abra a foto, escolha *WebP* com qualidade 75–80 e baixe.
 
 ### Imagem de compartilhamento e ícone
 
@@ -113,12 +121,24 @@ Importe o repositório em [vercel.com/new](https://vercel.com/new). O Vite é de
 
 ---
 
-## 5. Estrutura do projeto
+## 5. O que o site faz (movimento e recursos)
+
+- **Topo:** céu com estrelas piscando e estrelas cadentes, título que surge palavra por palavra, brilho que passa por "Fátima", poeira dourada ao redor de Nossa Senhora e luz que acompanha o mouse. Ao rolar, as camadas se movem em profundidades diferentes.
+- **Contagem regressiva** com segundos e números que "rolam" ao mudar.
+- **Menu:** barra dourada de progresso de leitura e destaque da seção atual.
+- **Programação:** terço de nove contas (as passadas ficam douradas e a de hoje pulsa), cartões com inclinação 3D e reflexo dourado, botões **Adicionar à agenda** (arquivo .ics com os 9 dias e a festa) e **Compartilhar** (menu do celular ou WhatsApp).
+- **Festa:** as velas se acendem uma a uma, com brasas subindo, e o visitante pode **acender uma vela** pela sua intenção.
+- **Oração:** o texto se ilumina palavra por palavra conforme a leitura.
+
+Tudo respeita a opção "reduzir movimento" do sistema: com ela ligada, o site fica estático e continua completo.
+
+## 6. Estrutura do projeto
 
 ```
 index.html                 Estrutura da página (textos fixos das seções)
 src/data/novena.js         ← DADOS EDITÁVEIS
 src/styles/
+  fonts.css                Fontes auto-hospedadas (public/fonts/)
   tokens.css               Cores, fontes e medidas
   base.css                 Estilos gerais, botões, ornamentos
   sections.css             Estilo de cada seção
@@ -128,9 +148,13 @@ src/js/
   render-program.js        Gera cartões da programação, lista da festa e contatos
   countdown.js             Contagem regressiva
   reveal.js                Revelação dos blocos ao rolar
+  effects.js               Efeitos: parallax, partículas, terço, velas, oração
+  calendar.js              "Adicionar à agenda" e "Compartilhar"
   menu.js                  Menu do celular
 public/                    Arquivos copiados como estão (ícone, og-image, imagens)
 scripts/gerar-imagens.mjs  Gera og-image.png e apple-touch-icon.png
+scripts/preparar-nossa-senhora.mjs  Converte originais/nossa-senhora.png em WebP
+originais/                 Imagens originais (não são publicadas)
 vite.config.js             Pré-renderiza o conteúdo de novena.js no HTML (SEO e JSON-LD)
 Main.dc.html               Mockup original de referência (não é publicado)
 ```

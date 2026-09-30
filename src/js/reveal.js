@@ -14,8 +14,16 @@ export function initReveal() {
         if (!entry.isIntersecting) continue;
         const el = entry.target;
         el.classList.add('in');
-        el.addEventListener('transitionend', () => el.classList.add('done'), { once: true });
         io.unobserve(el);
+        // Terminada a entrada, o elemento volta ao estilo normal (hover e inclinação imediatos).
+        const release = () => el.classList.remove('rv', 'in');
+        const onEnd = (e) => {
+          if (e.target !== el) return;
+          el.removeEventListener('transitionend', onEnd);
+          release();
+        };
+        el.addEventListener('transitionend', onEnd);
+        setTimeout(release, 2600);
       }
     },
     { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },

@@ -9,6 +9,8 @@ import { slots, hojeEmBrasilia } from './render-program.js';
 import { initCountdown } from './countdown.js';
 import { initMenu } from './menu.js';
 import { initReveal } from './reveal.js';
+import { initEffects } from './effects.js';
+import { initCalendar } from './calendar.js';
 
 /** Preenche os `data-slot` a partir de novena.js (inclui o destaque do dia de hoje). */
 function renderSlots() {
@@ -49,3 +51,5 @@ renderStars();
 initMenu();
 initCountdown(document.querySelector('.count'), novena);
 initReveal();
+initEffects();
+initCalendar(novena);

@@ -11,10 +11,13 @@ const freshImport = (file) => import(`${pathToFileURL(fromRoot(file)).href}?t=${
 
 const attr = (v) => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 
+// Imagem recortada (fundo transparente, proporção 2:3) ocupando toda a área, dentro da aura.
 const NOSSA_SENHORA_IMG = `<g class="figure">
-          <image href="/img/nossa-senhora.webp" x="60" y="60" width="280" height="500" preserveAspectRatio="xMidYMax slice" clip-path="url(#arch)"/>
-          <path d="M60 560 V200 A140 140 0 0 1 340 200 V560" fill="none" stroke="url(#gold)" stroke-width="2"/>
+          <image class="ns-img" href="/img/nossa-senhora.webp" x="0" y="0" width="400" height="600" preserveAspectRatio="xMidYMid meet"/>
         </g>`;
+
+const NOSSA_SENHORA_PRELOAD =
+  '<link rel="preload" href="/img/nossa-senhora.webp" as="image" type="image/webp" fetchpriority="high">';
 
 const IGREJA_IMG = `<div class="photo"><img src="/img/igreja.webp" width="960" height="720" loading="lazy" decoding="async" alt="Fachada da Igreja Matriz da Paróquia Nossa Senhora de Fátima, em Viamão"></div>`;
 
@@ -90,6 +93,13 @@ function novenaHtml() {
           canonical: site ? `<link rel="canonical" href="${attr(site)}/">` : '',
           ogUrl: site ? `<meta property="og:url" content="${attr(site)}/">` : '',
           jsonLd: jsonLd(novena),
+          whatsapp: attr(
+            'https://wa.me/?text=' +
+              encodeURIComponent(
+                `Novena de Nossa Senhora de Fátima ${novena.ano}: de 4 a 12 de maio, com a Festa da Padroeira em 13 de maio. ` +
+                  `Paróquia N. Sra. de Fátima, Viamão/RS.${site ? ` ${site}/` : ''}`,
+              ),
+          ),
         };
 
         let out = html
@@ -97,7 +107,9 @@ function novenaHtml() {
           .replace(/\{\{(\w+)\}\}/g, (m, k) => (k in tokens ? String(tokens[k]) : m));
 
         if (existsSync(fromRoot('public/img/nossa-senhora.webp'))) {
-          out = out.replace(/<!-- nossa-senhora:inicio[\s\S]*?<!-- nossa-senhora:fim -->/, NOSSA_SENHORA_IMG);
+          out = out
+            .replace(/<!-- nossa-senhora:inicio[\s\S]*?<!-- nossa-senhora:fim -->/, NOSSA_SENHORA_IMG)
+            .replace('</title>', `</title>\n${NOSSA_SENHORA_PRELOAD}`);
         }
         if (existsSync(fromRoot('public/img/igreja.webp'))) {
           out = out.replace(/<!-- igreja:inicio[\s\S]*?<!-- igreja:fim -->/, IGREJA_IMG);

@@ -52,6 +52,7 @@
       <a href="#local">Como chegar</a>
     </div>
   </nav>
+  <div class="progress" aria-hidden="true"><span></span></div>
   <nav id="menu-mobile" class="mnav wrap" aria-label="Menu" hidden>
     <a href="#mensagem">A Mensagem</a>
     <a href="#programacao">Programação</a>
@@ -65,10 +66,12 @@
 
 <section id="inicio" class="hero" aria-labelledby="titulo">
   <div class="stars" data-stars="46" data-seed="11" aria-hidden="true"></div>
+  <div class="sky" aria-hidden="true"><span class="shoot shoot--1"></span><span class="shoot shoot--2"></span></div>
+  <div class="hero-light" aria-hidden="true"></div>
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <p class="caps hero-kicker enter d1">Viamão · Maio de {{ano}}</p>
-      <h1 id="titulo" class="h-hero enter d2">Novena de Nossa Senhora de <em>Fátima</em></h1>
+      <h1 id="titulo" class="h-hero"><span class="w" style="--w:0"><span>Novena</span></span> <span class="w" style="--w:1"><span>de</span></span> <span class="w" style="--w:2"><span>Nossa</span></span> <span class="w" style="--w:3"><span>Senhora</span></span> <span class="w" style="--w:4"><span>de</span></span> <span class="w w--gold" style="--w:5"><em>Fátima</em></span></h1>
       <p class="lead enter d3">Nove noites de oração, terço e Santa Missa preparando o coração da comunidade para a festa da nossa Padroeira, em 13 de maio.</p>
       <div class="count-wrap enter d4">
         <p class="caps count-label">Faltam para o 1º dia · 4 de maio</p>
@@ -76,6 +79,7 @@
           <div class="count-box"><span class="count-num" data-cd="d">–</span><span class="caps count-unit">dias</span></div>
           <div class="count-box"><span class="count-num" data-cd="h">–</span><span class="caps count-unit">horas</span></div>
           <div class="count-box"><span class="count-num" data-cd="m">–</span><span class="caps count-unit">min</span></div>
+          <div class="count-box"><span class="count-num" data-cd="s">–</span><span class="caps count-unit">seg</span></div>
           <p class="count-status" data-cd-status></p>
         </div>
       </div>
@@ -86,7 +90,8 @@
     </div>
 
     <div class="hero-art enter d3">
-      <svg viewBox="0 0 400 600" width="400" height="600" role="img" aria-label="Nossa Senhora de Fátima, com coroa dourada, manto branco e terço nas mãos, sobre uma nuvem">
+      <div class="dust" data-dust="18" aria-hidden="true"></div>
+      <svg class="hero-svg" viewBox="0 0 400 600" width="400" height="600" role="img" aria-label="Nossa Senhora de Fátima, com coroa dourada, manto branco e terço nas mãos, sobre uma nuvem">
         <defs>
           <radialGradient id="glow" cx="50%" cy="42%" r="50%"><stop offset="0" stop-color="#fff3cf" stop-opacity=".95"/><stop offset=".35" stop-color="#e8c778" stop-opacity=".35"/><stop offset="1" stop-color="#e8c778" stop-opacity="0"/></radialGradient>
           <linearGradient id="mantle" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e7ecf4"/></linearGradient>
@@ -137,7 +142,7 @@
   <div class="wrap two">
     <figure class="mensagem-quote rv" style="margin:0">
       <figcaption class="caps kicker">Cova da Iria · 1917</figcaption>
-      <blockquote class="quote">“Rezem o terço todos os dias, para alcançarem a paz para o mundo.”</blockquote>
+      <blockquote class="quote" data-words>“Rezem o terço todos os dias, para alcançarem a paz para o mundo.”</blockquote>
       <div class="orn orn--start" aria-hidden="true"><span></span><svg width="14" height="14" viewBox="-1 -1 2 2"><polygon points="0,-1 0.2245,-0.309 0.951,-0.309 0.363,0.118 0.588,0.809 0,0.382 -0.588,0.809 -0.363,0.118 -0.951,-0.309 -0.2245,-0.309" fill="currentColor"/></svg></div>
     </figure>
     <div class="mensagem-text rv">
@@ -155,7 +160,18 @@
       <h2 id="titulo-programacao" class="h-sec">Programação da Novena</h2>
       <p data-slot="horario">{{slot:horario}}</p>
     </div>
+    <nav class="rosary rv" aria-label="Os nove dias da novena" data-slot="rosario">{{slot:rosario}}</nav>
     <div class="days" data-slot="dias">{{slot:dias}}</div>
+    <div class="prog-actions rv">
+      <button class="btn btn-navy" type="button" data-ics hidden>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/></svg>
+        Adicionar à agenda
+      </button>
+      <a class="btn btn-outline" href="{{whatsapp}}" rel="noopener" data-share>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
+        Compartilhar
+      </a>
+    </div>
   </div>
 </section>
 
@@ -168,31 +184,42 @@
       <p>O encerramento da novena com a comunidade reunida em louvor a Nossa Senhora de Fátima.</p>
       <ul class="festa-list" data-slot="festa">{{slot:festa}}</ul>
     </div>
-    <div class="candles rv" aria-hidden="true">
+    <div class="candles-col rv">
+    <div class="candles" aria-hidden="true">
+      <div class="embers" data-embers="14"></div>
       <svg width="54" height="230" viewBox="0 0 60 300" preserveAspectRatio="xMidYMax meet">
         <defs><radialGradient id="fg1" cx="50%" cy="60%" r="50%"><stop offset="0" stop-color="#fff8dc"/><stop offset=".45" stop-color="#ffd27a"/><stop offset="1" stop-color="#ff9a3c" stop-opacity="0"/></radialGradient></defs>
-        <circle class="flame-glow" cx="30" cy="48" r="30" fill="#ffcf73" opacity=".18"/>
-        <g class="flame"><path d="M30 20 C40 38 42 52 30 70 C18 52 20 38 30 20 Z" fill="url(#fg1)"/><path d="M30 44 C34 52 34 58 30 66 C26 58 26 52 30 44 Z" fill="#fffaf0"/></g>
+        <g class="ignite"><circle class="flame-glow" cx="30" cy="46" r="30" fill="url(#fg1)" opacity=".5"/><g class="flame"><path d="M30 20 C40 38 42 52 30 70 C18 52 20 38 30 20 Z" fill="url(#fg1)"/><path d="M30 44 C34 52 34 58 30 66 C26 58 26 52 30 44 Z" fill="#fffaf0"/></g></g>
         <rect x="29" y="68" width="2" height="8" fill="#3a3024"/>
         <rect x="14" y="76" width="32" height="224" rx="4" fill="#f6f1e4"/>
         <rect x="14" y="76" width="8" height="224" fill="#ffffff" opacity=".6"/>
       </svg>
       <svg class="candle-lg" width="70" height="320" viewBox="0 0 60 300" preserveAspectRatio="xMidYMax meet">
         <defs><radialGradient id="fg2" cx="50%" cy="60%" r="50%"><stop offset="0" stop-color="#fff8dc"/><stop offset=".45" stop-color="#ffd27a"/><stop offset="1" stop-color="#ff9a3c" stop-opacity="0"/></radialGradient></defs>
-        <circle class="flame-glow" cx="30" cy="48" r="30" fill="#ffcf73" opacity=".18" style="animation-delay:-1.2s"/>
-        <g class="flame" style="animation-delay:.6s;animation-duration:2.6s"><path d="M30 20 C40 38 42 52 30 70 C18 52 20 38 30 20 Z" fill="url(#fg2)"/><path d="M30 44 C34 52 34 58 30 66 C26 58 26 52 30 44 Z" fill="#fffaf0"/></g>
+        <g class="ignite"><circle class="flame-glow" cx="30" cy="46" r="30" fill="url(#fg2)" opacity=".5" style="animation-delay:-1.2s"/><g class="flame" style="animation-delay:.6s;animation-duration:2.6s"><path d="M30 20 C40 38 42 52 30 70 C18 52 20 38 30 20 Z" fill="url(#fg2)"/><path d="M30 44 C34 52 34 58 30 66 C26 58 26 52 30 44 Z" fill="#fffaf0"/></g></g>
         <rect x="29" y="68" width="2" height="8" fill="#3a3024"/>
         <rect x="14" y="76" width="32" height="224" rx="4" fill="#f6f1e4"/>
         <rect x="14" y="76" width="8" height="224" fill="#ffffff" opacity=".6"/>
       </svg>
       <svg width="54" height="260" viewBox="0 0 60 300" preserveAspectRatio="xMidYMax meet">
         <defs><radialGradient id="fg3" cx="50%" cy="60%" r="50%"><stop offset="0" stop-color="#fff8dc"/><stop offset=".45" stop-color="#ffd27a"/><stop offset="1" stop-color="#ff9a3c" stop-opacity="0"/></radialGradient></defs>
-        <circle class="flame-glow" cx="30" cy="48" r="30" fill="#ffcf73" opacity=".18" style="animation-delay:-2.3s"/>
-        <g class="flame" style="animation-delay:1.1s;animation-duration:1.9s"><path d="M30 20 C40 38 42 52 30 70 C18 52 20 38 30 20 Z" fill="url(#fg3)"/><path d="M30 44 C34 52 34 58 30 66 C26 58 26 52 30 44 Z" fill="#fffaf0"/></g>
+        <g class="ignite"><circle class="flame-glow" cx="30" cy="46" r="30" fill="url(#fg3)" opacity=".5" style="animation-delay:-2.3s"/><g class="flame" style="animation-delay:1.1s;animation-duration:1.9s"><path d="M30 20 C40 38 42 52 30 70 C18 52 20 38 30 20 Z" fill="url(#fg3)"/><path d="M30 44 C34 52 34 58 30 66 C26 58 26 52 30 44 Z" fill="#fffaf0"/></g></g>
         <rect x="29" y="68" width="2" height="8" fill="#3a3024"/>
         <rect x="14" y="76" width="32" height="224" rx="4" fill="#f6f1e4"/>
         <rect x="14" y="76" width="8" height="224" fill="#ffffff" opacity=".6"/>
       </svg>
+      <svg class="candle-mine" width="40" height="170" viewBox="0 0 60 300" preserveAspectRatio="xMidYMax meet">
+        <defs><radialGradient id="fg4" cx="50%" cy="60%" r="50%"><stop offset="0" stop-color="#fff8dc"/><stop offset=".45" stop-color="#ffd27a"/><stop offset="1" stop-color="#ff9a3c" stop-opacity="0"/></radialGradient></defs>
+        <g class="ignite"><circle class="flame-glow" cx="30" cy="46" r="30" fill="url(#fg4)" opacity=".5" style="animation-delay:-.7s"/><g class="flame" style="animation-duration:2.4s"><path d="M30 20 C40 38 42 52 30 70 C18 52 20 38 30 20 Z" fill="url(#fg4)"/><path d="M30 44 C34 52 34 58 30 66 C26 58 26 52 30 44 Z" fill="#fffaf0"/></g></g>
+        <rect x="29" y="68" width="2" height="8" fill="#3a3024"/>
+        <rect x="14" y="76" width="32" height="224" rx="4" fill="#f6f1e4"/>
+        <rect x="14" y="76" width="8" height="224" fill="#ffffff" opacity=".6"/>
+      </svg>
+    </div>
+    <div class="vela">
+      <button class="btn btn-line" type="button" data-vela hidden>Acender uma vela</button>
+      <p class="vela-msg" role="status"></p>
+    </div>
     </div>
   </div>
 </section>
@@ -201,7 +228,7 @@
   <div class="wrap rv">
     <div class="orn" aria-hidden="true"><span></span><svg width="16" height="16" viewBox="-1 -1 2 2"><polygon points="0,-1 0.2245,-0.309 0.951,-0.309 0.363,0.118 0.588,0.809 0,0.382 -0.588,0.809 -0.363,0.118 -0.951,-0.309 -0.2245,-0.309" fill="currentColor"/></svg><span></span></div>
     <h2 id="titulo-oracao" class="caps kicker">Oração ensinada pelo Anjo aos pastorinhos</h2>
-    <p class="prayer">Meu Deus, eu creio, adoro, espero e amo-Vos. Peço-Vos perdão para os que não creem, não adoram, não esperam e não Vos amam.</p>
+    <p class="prayer" data-illuminate>Meu Deus, eu creio, adoro, espero e amo-Vos. Peço-Vos perdão para os que não creem, não adoram, não esperam e não Vos amam.</p>
     <p class="caps amen">Amém</p>
   </div>
 </section>
@@ -209,6 +236,7 @@
 <section id="local" class="local" aria-labelledby="titulo-local">
   <div class="wrap">
     <div class="two rv card-local on-dark">
+      <span class="card-sheen" aria-hidden="true"></span>
       <div class="local-copy">
         <p class="caps kicker">Como chegar</p>
         <h2 id="titulo-local" class="h-sec">Venha rezar conosco</h2>
@@ -235,9 +263,11 @@
 
 <footer class="footer">
   <div class="wrap">
+    <svg class="monogram" width="54" height="64" viewBox="0 0 54 64" fill="none" stroke="#c9a24f" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M27 2v12M22 7h10"/><path d="M8 56V22l19 22 19-22v34"/><path d="M4 56h10M40 56h10"/></svg>
     <p class="serif footer-name">Paróquia Nossa Senhora de Fátima</p>
     <p class="caps">Viamão · Arquidiocese de Porto Alegre</p>
-    <p>Nossa Senhora de Fátima, rogai por nós.</p>
+    <p class="footer-prayer">Nossa Senhora de Fátima, rogai por nós.</p>
+    <a class="to-top caps" href="#inicio">Voltar ao início</a>
   </div>
 </footer>
 

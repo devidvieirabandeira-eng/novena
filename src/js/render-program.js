@@ -44,7 +44,7 @@ export function renderDias(dias, hoje = '') {
       const n = i + 1;
       const atual = dia.data === hoje;
       return `
-<article class="day rv${atual ? ' is-today' : ''}" style="--i:${i % 3}"${atual ? ' aria-current="date"' : ''}>
+<article id="dia-${n}" class="day rv${atual ? ' is-today' : ''}" style="--i:${i % 3}" data-dia="${n}"${atual ? ' aria-current="date"' : ''}>
   <div class="day-head">
     <span class="day-n serif" aria-hidden="true">${n}</span>
     <span class="day-label caps">${atual ? '<span class="day-today">Hoje</span>' : ''}${n}º dia</span>
@@ -59,6 +59,28 @@ export function renderDias(dias, hoje = '') {
 </article>`;
     })
     .join('');
+}
+
+/** Terço de nove contas: passadas ficam douradas, a de hoje pulsa. */
+export function renderRosario(dias, hoje = '') {
+  const primeiro = dias[0].data;
+  const ultimo = dias[dias.length - 1].data;
+  const idxHoje = dias.findIndex((d) => d.data === hoje);
+  let legenda = 'Nove dias, nove contas';
+  if (idxHoje >= 0) legenda = `Hoje · ${idxHoje + 1}º dia da novena`;
+  else if (hoje && hoje > ultimo) legenda = 'Novena concluída · Obrigado por rezar conosco';
+
+  const contas = dias
+    .map((dia, i) => {
+      const estado = dia.data === hoje ? 'is-today' : hoje && dia.data < hoje && hoje >= primeiro ? 'is-past' : '';
+      return `<li><a class="bead ${estado}" href="#dia-${i + 1}" data-bead="${i + 1}" style="--b:${i}" aria-label="${i + 1}º dia, ${dataPorExtenso(dia.data)}"${
+        estado === 'is-today' ? ' aria-current="date"' : ''
+      }><span class="bead-dot"></span><span class="bead-n">${i + 1}</span></a></li>`;
+    })
+    .join('');
+
+  return `<p class="rosary-cap caps">${legenda}</p>
+<ol class="rosary-beads">${contas}<li class="rosary-cross" aria-hidden="true"><svg width="18" height="26" viewBox="0 0 18 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 2v22M3 9h12"/></svg></li></ol>`;
 }
 
 export function renderFesta(festa) {
@@ -84,6 +106,7 @@ export function slots(data, hoje = '') {
   return {
     horario: renderHorario(data),
     dias: renderDias(data.dias, hoje),
+    rosario: renderRosario(data.dias, hoje),
     festa: renderFesta(data.festa),
     endereco: `${escapeHtml(c.endereco)}<br>${escapeHtml(c.cidade)} · ${escapeHtml(c.uf)} · ${escapeHtml(c.cep)}`,
     telefone: `<a href="tel:+55${c.telefone.replace(/\D/g, '')}">${escapeHtml(c.telefone)}</a>`,

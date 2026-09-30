@@ -25,9 +25,9 @@
   --tbd: #6b7385;
 
   /* Tipografia */
-  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  --font-caps: 'Cinzel', Georgia, serif;
-  --font-sans: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  --font-serif: 'Cormorant Garamond', 'Cormorant Fallback', Georgia, 'Times New Roman', serif;
+  --font-caps: 'Cinzel', 'Cinzel Fallback', Georgia, serif;
+  --font-sans: 'Jost', 'Jost Fallback', 'Helvetica Neue', Arial, sans-serif;
 
   /* Layout */
   --wrap: 1200px;

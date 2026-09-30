@@ -8,7 +8,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "imagens": "node scripts/gerar-imagens.mjs"
+    "imagens": "node scripts/gerar-imagens.mjs",
+    "nossa-senhora": "node scripts/preparar-nossa-senhora.mjs"
   },
   "devDependencies": {
     "sharp": "^0.33.5",
