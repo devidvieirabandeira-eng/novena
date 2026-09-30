@@ -245,10 +245,27 @@ function initVela() {
   if (!btn || !candles) return;
   btn.hidden = false;
   btn.addEventListener('click', () => {
+    // FLIP: guarda onde as velas estão, abre espaço para a nova e as faz deslizar até o novo lugar.
+    const velas = [...candles.querySelectorAll('svg:not(.candle-mine)')];
+    const antes = velas.map((v) => v.getBoundingClientRect().left);
     candles.classList.add('lit', 'mine');
+    if (!reduce) {
+      velas.forEach((v, i) => {
+        const dx = antes[i] - v.getBoundingClientRect().left;
+        if (dx) {
+          v.animate([{ transform: `translateX(${dx}px)` }, { transform: 'none' }], {
+            duration: 1100,
+            easing: 'cubic-bezier(.45,0,.2,1)',
+          });
+        }
+      });
+    }
     btn.disabled = true;
     btn.textContent = 'Vela acesa';
-    if (msg) msg.textContent = 'Sua vela está acesa. Nossa Senhora de Fátima, rogai por nós.';
+    if (msg) {
+      msg.textContent = 'Sua vela está acesa. Nossa Senhora de Fátima, rogai por nós.';
+      setTimeout(() => msg.classList.add('is-shown'), reduce ? 0 : 1700);
+    }
   });
 }
 

@@ -223,12 +223,37 @@ html.fx .candles:not(.lit) .embers {
   transition: opacity 1.2s ease 1.6s;
 }
 
+/* Vela do visitante: as outras deslizam (effects.js), ela sobe devagar e só então acende */
 .candles.mine .candle-mine {
-  animation: rise 0.9s var(--ease) both;
+  animation: candle-in 1.3s var(--ease) 0.35s both;
 }
 
 .candles.mine .candle-mine .ignite {
-  animation: ignite 1.2s var(--ease) 0.6s both;
+  animation: ignite 1.5s var(--ease) 1.5s both;
+}
+
+.vela-msg {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 1.2s ease,
+    transform 1.2s var(--ease);
+}
+
+.vela-msg.is-shown {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes candle-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Aspas da citação: palavras aparecem em sequência */
