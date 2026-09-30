@@ -1,0 +1,159 @@
+/* Só transform e opacity são animados (composição na GPU). */
+
+/* Entrada do hero em sequência */
+.enter {
+  opacity: 0;
+  animation: rise 1.2s var(--ease) forwards;
+}
+
+.d1 { animation-delay: 0.15s; }
+.d2 { animation-delay: 0.35s; }
+.d3 { animation-delay: 0.55s; }
+.d4 { animation-delay: 0.75s; }
+.d5 { animation-delay: 0.95s; }
+
+/* Céu estrelado */
+.star {
+  opacity: 0.6;
+  animation: twinkle 4s ease-in-out infinite;
+}
+
+/* Halo, raios e figura */
+.rays {
+  transform-origin: 200px 250px;
+  transform-box: view-box;
+  animation: spin 120s linear infinite;
+}
+
+.halo {
+  transform-origin: 200px 250px;
+  transform-box: view-box;
+  animation: breathe 6s ease-in-out infinite;
+}
+
+.figure {
+  animation: float 9s ease-in-out infinite;
+}
+
+/* Velas */
+.flame {
+  transform-origin: 50% 100%;
+  transform-box: fill-box;
+  animation: flicker 2.2s ease-in-out infinite;
+}
+
+.flame-glow {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: glow 3.4s ease-in-out infinite;
+}
+
+/* Menu mobile: links entram em sequência */
+.mnav:not([hidden]) a {
+  animation: rise 0.5s var(--ease) both;
+}
+
+.mnav a:nth-child(2) { animation-delay: 0.05s; }
+.mnav a:nth-child(3) { animation-delay: 0.1s; }
+.mnav a:nth-child(4) { animation-delay: 0.15s; }
+.mnav a:nth-child(5) { animation-delay: 0.2s; }
+
+/* Revelação ao rolar (a classe rv-on só existe quando o JS roda) */
+html.rv-on .rv {
+  opacity: 0;
+  transform: translateY(34px);
+  transition:
+    opacity 1.1s var(--ease),
+    transform 1.1s var(--ease);
+}
+
+html.rv-on .rv.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Cascata nos cartões da programação */
+html.rv-on .day.rv {
+  transition-delay: calc(var(--i, 0) * 0.12s);
+}
+
+/* Depois de revelado (classe .done via reveal.js), o hover volta a ser imediato */
+html.rv-on .day.rv.done {
+  transition:
+    transform 0.5s var(--ease),
+    box-shadow 0.5s var(--ease),
+    border-color 0.5s var(--ease);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.75; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes flicker {
+  0%, 100% { transform: scaleY(1) rotate(-1deg); }
+  30% { transform: scaleY(1.08) rotate(1.5deg); }
+  60% { transform: scaleY(0.94) rotate(-0.5deg); }
+}
+
+@keyframes glow {
+  0%, 100% { opacity: 0.14; transform: scale(1); }
+  50% { opacity: 0.24; transform: scale(1.12); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .star,
+  .rays,
+  .halo,
+  .figure,
+  .flame,
+  .flame-glow,
+  .mnav:not([hidden]) a {
+    animation: none;
+  }
+
+  .enter {
+    animation: none;
+    opacity: 1;
+  }
+
+  html.rv-on .rv {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .btn:hover,
+  .day:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,47 @@
+:root {
+  /* Cores */
+  --navy-900: #0a1830;
+  --navy-800: #0f2244;
+  --marian: #2c4f8a;
+  --sky-50: #eef2f8;
+  --ivory: #fbf8f1;
+  --paper: #fffdf8;
+  --gold: #c9a24f;
+  --gold-light: #d9bd7a;
+  --gold-deep: #8a6a24;
+  --text: #1d2433;
+  --muted: #4a5366;
+  --cream-text: #f4ecd8;
+
+  /* Derivadas */
+  --gold-soft: #e3c985;        /* destaques dourados sobre navy */
+  --gold-num: #a8812f;         /* números grandes sobre papel (contraste AA p/ texto grande) */
+  --ornament: #b8913f;
+  --line-light: #e6dcc4;
+  --line-gold: rgba(217, 189, 122, 0.3);
+  --heading-light: #fbf6e8;
+  --body-light: #d8d3c4;
+  --muted-light: #b9b3a2;
+  --tbd: #6b7385;
+
+  /* Tipografia */
+  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-caps: 'Cinzel', Georgia, serif;
+  --font-sans: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Layout */
+  --wrap: 1200px;
+  --gutter: 40px;
+  --nav-h: 72px;
+  --radius-card: 20px;
+
+  /* Movimento */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (max-width: 620px) {
+  :root {
+    --gutter: 20px;
+    --nav-h: 64px;
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "novena-fatima-viamao",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Site one-page da Novena de Nossa Senhora de Fátima 2027 — Paróquia N. Sra. de Fátima (Viamão/RS)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "imagens": "node scripts/gerar-imagens.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.5",
+    "vite": "^5.4.10"
+  }
+}
